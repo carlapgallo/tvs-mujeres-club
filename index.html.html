@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TVS Mujeres Club</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    :root {
+      --blue: #1B3A8C;
+      --blue-dark: #122870;
+      --blue-light: #dde8fb;
+      --red: #C8391A;
+      --red-light: #fde9e4;
+      --red-border: #f8c4b4;
+      --bg: #f5f6fa;
+      --white: #ffffff;
+      --border: rgba(0,0,0,0.09);
+      --text: #1a1a1a;
+      --text-muted: #6b7280;
+      --text-sm: #9ca3af;
+      --radius: 10px;
+      --radius-sm: 7px;
+      --radius-pill: 30px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      font-family: 'Barlow', sans-serif;
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ── DESKTOP LAYOUT ── */
+    @media (min-width: 768px) {
+      body { display: flex; justify-content: center; align-items: flex-start; padding: 32px 16px 60px; }
+      .app-shell {
+        width: 420px;
+        border-radius: 24px;
+        overflow: hidden;
+        box-shadow: 0 24px 80px rgba(27,58,140,0.18), 0 4px 16px rgba(0,0,0,0.08);
+        border: 1px solid var(--border);
+        position: relative;
+      }
+      .desktop-aside {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+        width: 260px;
+        margin-left: 24px;
+        padding-top: 8px;
+      }
+      .desktop-wrapper { display: flex; align-items: flex-start; max-width: 1100px; width: 100%; }
+      .desktop-label {
+        font-size: 11px; color: var(--text-sm); text-transform: uppercase;
+        letter-spacing: 1px; text-align: center; margin-bottom: 12px;
+      }
+    }
+
+    @media (max-width: 767px) {
+      .desktop-aside { display: none; }
+      .desktop-wrapper { display: block; }
+      .desktop-label { display: none; }
+      .app-shell { border-radius: 0; box-shadow: none; border: none; }
+      body { padding: 0; }
+    }
+
+    /* ── SCROLL AREA ── */
+    .scroll-area {
+      background: var(--bg);
+      max-height: 820px;
+      overflow-y: auto;
+      scrollbar-width: none;
+    }
+    .scroll-area::-webkit-scrollbar { display: none; }
+
+    @media (max-width: 767px) {
+      .scroll-area { max-height: none; overflow-y: visible; padding-bottom: 60px; }
+    }
+
+    /* ── TOP BAR ── */
+    .topbar {
+      background: var(--blue);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 18px;
+      border-bottom: 3px solid var(--red);
+      position: sticky; top: 0; z-index: 50;
+    }
+    .topbar-left { display: flex; align-items: center; gap: 10px; }
+    .back-btn {
+      color: rgba(255,255,255,0.75); font-size: 13px;
+      display: flex; align-items: center; gap: 5px; cursor: pointer;
+      transition: color .2s;
+    }
+    .back-btn:hover { color: #fff; }
+    .club-badge {
+      background: var(--red); color: #fff;
+      font-size: 10px; font-weight: 600; letter-spacing: .8px;
+      padding: 3px 10px; border-radius: 4px; text-transform: uppercase;
+    }
+    .topbar-right { display: flex; gap: 16px; }
+    .topbar-right i { color: rgba(255,255,255,0.75); font-size: 17px; cursor: pointer; transition: color .2s; }
+    .topbar-right i:hover { color: #fff; }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--blue);
+      padding: 24px 20px 28px;
+    }
+    .hero-tag {
+      display: inline-block;
+      background: var(--red); color: #fff;
+      font-size: 10px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;
+      padding: 4px 12px; border-radius: var(--radius-pill);
+      margin-bottom: 12px;
+    }
+    .hero h1 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 26px; font-weight: 700; color: #fff;
+      line-height: 1.15; margin-bottom: 6px;
+    }
+    .hero p { color: rgba(255,255,255,0.7); font-size: 13px; margin-bottom: 18px; }
+    .hero-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--red); color: #fff; border: none;
+      padding: 10px 20px; border-radius: var(--radius-sm);
+      font-size: 13px; font-weight: 600; font-family: 'Barlow', sans-serif;
+      cursor: pointer; transition: background .2s, transform .1s;
+    }
+    .btn-primary:hover { background: #b02f14; }
+    .btn-primary:active { transform: scale(.97); }
+    .btn-outline {
+      background: transparent; color: #fff;
+      border: 1.5px solid rgba(255,255,255,0.45);
+      padding: 10px 20px; border-radius: var(--radius-sm);
+      font-size: 13px; font-weight: 500; font-family: 'Barlow', sans-serif;
+      cursor: pointer; transition: border-color .2s;
+    }
+    .btn-outline:hover { border-color: rgba(255,255,255,.85); }
+
+    .hero-stats {
+      display: flex; margin-top: 22px;
+      border-top: 1px solid rgba(255,255,255,0.13); padding-top: 18px;
+    }
+    .stat { flex: 1; text-align: center; border-right: 1px solid rgba(255,255,255,0.1); }
+    .stat:last-child { border-right: none; }
+    .stat-n {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 22px; font-weight: 700; color: var(--red);
+    }
+    .stat-l { font-size: 10px; color: rgba(255,255,255,0.58); margin-top: 2px; }
+
+    /* ── SECTIONS ── */
+    .section { padding: 20px 16px; background: var(--bg); }
+    .section-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 14px;
+    }
+    .section-title {
+      font-size: 14px; font-weight: 600; color: var(--blue);
+      display: flex; align-items: center; gap: 6px;
+    }
+    .section-title i { color: var(--red); font-size: 14px; }
+    .see-all { font-size: 12px; color: var(--red); cursor: pointer; font-weight: 500; }
+    .see-all:hover { text-decoration: underline; }
+
+    .divider { height: 6px; background: #eaebf0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+    /* ── FILTER PILLS ── */
+    .filter-row {
+      display: flex; gap: 8px;
+      overflow-x: auto; padding-bottom: 4px; margin-bottom: 14px;
+      scrollbar-width: none;
+    }
+    .filter-row::-webkit-scrollbar { display: none; }
+    .pill {
+      flex-shrink: 0; padding: 5px 14px; border-radius: var(--radius-pill);
+      font-size: 11px; font-weight: 600; font-family: 'Barlow', sans-serif;
+      border: 1.5px solid var(--blue); color: var(--blue);
+      background: transparent; cursor: pointer;
+      transition: background .18s, color .18s;
+    }
+    .pill.active, .pill:hover { background: var(--blue); color: #fff; }
+
+    /* ── CITY GRID ── */
+    .city-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .city-card {
+      background: var(--white); border-radius: var(--radius-sm);
+      border: 0.5px solid var(--border);
+      padding: 14px 8px; text-align: center;
+      transition: box-shadow .2s, transform .15s; cursor: pointer;
+    }
+    .city-card:hover { box-shadow: 0 4px 16px rgba(27,58,140,0.1); transform: translateY(-1px); }
+    .city-card i { font-size: 22px; color: var(--blue); display: block; margin-bottom: 5px; }
+    .city-card .cn { font-size: 11px; font-weight: 600; color: var(--text); }
+    .city-card .cc { font-size: 10px; color: var(--red); margin-top: 2px; }
+
+    /* ── MODEL SCROLL ── */
+    .model-scroll {
+      display: flex; gap: 10px; overflow-x: auto; padding-bottom: 6px;
+      scrollbar-width: none;
+    }
+    .model-scroll::-webkit-scrollbar { display: none; }
+    .model-card {
+      flex-shrink: 0; width: 130px;
+      background: var(--white); border-radius: var(--radius);
+      border: 0.5px solid var(--border); padding: 12px 10px;
+      transition: box-shadow .2s, transform .15s; cursor: pointer;
+    }
+    .model-card:hover { box-shadow: 0 4px 16px rgba(27,58,140,0.1); transform: translateY(-1px); }
+    .model-icon {
+      width: 100%; height: 50px; border-radius: 7px;
+      background: var(--blue-light); display: flex; align-items: center; justify-content: center;
+      margin-bottom: 9px;
+    }
+    .model-icon i { font-size: 26px; color: var(--blue); }
+    .model-name { font-size: 12px; font-weight: 600; color: var(--text); }
+    .model-owners { font-size: 10px; color: var(--text-muted); margin-top: 2px; }
+    .model-badge {
+      display: inline-block; margin-top: 6px;
+      background: var(--red-light); color: var(--red);
+      font-size: 9px; font-weight: 600; padding: 2px 8px;
+      border-radius: var(--radius-pill); border: 1px solid var(--red-border);
+    }
+
+    /* ── OCC GRID ── */
+    .occ-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    .occ-card {
+      background: var(--white); border-radius: var(--radius-sm);
+      border: 0.5px solid var(--border);
+      padding: 11px 12px; display: flex; align-items: center; gap: 10px;
+      transition: box-shadow .2s; cursor: pointer;
+    }
+    .occ-card:hover { box-shadow: 0 3px 12px rgba(27,58,140,0.1); }
+    .occ-icon {
+      width: 38px; height: 38px; border-radius: 8px;
+      background: var(--blue-light); display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .occ-icon i { font-size: 17px; color: var(--blue); }
+    .occ-label { font-size: 11px; font-weight: 600; color: var(--text); }
+    .occ-n { font-size: 10px; color: var(--red); margin-top: 1px; }
+
+    /* ── PROFILES ── */
+    .profile-scroll {
+      display: flex; gap: 10px; overflow-x: auto; padding-bottom: 6px;
+      scrollbar-width: none;
+    }
+    .profile-scroll::-webkit-scrollbar { display: none; }
+    .profile-card {
+      flex-shrink: 0; width: 100px;
+      background: var(--white); border-radius: var(--radius);
+      border: 0.5px solid var(--border); padding: 14px 8px; text-align: center;
+      transition: box-shadow .2s; cursor: pointer;
+    }
+    .profile-card:hover { box-shadow: 0 3px 12px rgba(27,58,140,0.1); }
+    .avatar {
+      width: 46px; height: 46px; border-radius: 50%;
+      margin: 0 auto 7px; display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 15px;
+    }
+    .av1 { background: var(--blue-light); color: var(--blue); }
+    .av2 { background: var(--red-light); color: var(--red); }
+    .av3 { background: #d1fae5; color: #065f46; }
+    .av4 { background: #fef3c7; color: #92400e; }
+    .p-name { font-size: 11px; font-weight: 600; color: var(--text); }
+    .p-occ { font-size: 10px; color: var(--text-muted); margin-top: 1px; }
+    .p-model { font-size: 10px; color: var(--red); margin-top: 3px; font-weight: 500; }
+
+    /* ── EVENTS ── */
+    .event-list { display: flex; flex-direction: column; gap: 9px; }
+    .event-card {
+      background: var(--white); border-radius: var(--radius-sm);
+      border: 0.5px solid var(--border);
+      padding: 11px 12px; display: flex; gap: 12px; align-items: center;
+      transition: box-shadow .2s; cursor: pointer;
+    }
+    .event-card:hover { box-shadow: 0 3px 12px rgba(27,58,140,0.1); }
+    .event-date {
+      background: var(--blue); color: #fff; border-radius: 7px;
+      padding: 7px 9px; text-align: center; flex-shrink: 0; min-width: 40px;
+    }
+    .ev-day { font-family: 'Barlow Condensed', sans-serif; font-size: 18px; font-weight: 700; line-height: 1; }
+    .ev-mon { font-size: 9px; opacity: .8; margin-top: 1px; text-transform: uppercase; letter-spacing: .5px; }
+    .ev-info { flex: 1; min-width: 0; }
+    .ev-name { font-size: 12px; font-weight: 600; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .ev-loc { font-size: 10px; color: var(--text-muted); margin-top: 3px; display: flex; align-items: center; gap: 4px; }
+    .ev-loc i { font-size: 10px; flex-shrink: 0; }
+    .ev-tag {
+      font-size: 9px; font-weight: 600; flex-shrink: 0;
+      background: var(--red-light); color: var(--red);
+      padding: 3px 9px; border-radius: var(--radius-pill); border: 1px solid var(--red-border);
+    }
+
+    /* ── JOIN BANNER ── */
+    .join-banner {
+      margin: 16px; border-radius: var(--radius);
+      background: var(--red); padding: 18px 16px;
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    }
+    .join-banner h3 { color: #fff; font-size: 14px; font-weight: 700; margin-bottom: 3px; font-family: 'Barlow Condensed', sans-serif; font-size: 16px; }
+    .join-banner p { color: rgba(255,255,255,0.82); font-size: 11px; line-height: 1.4; }
+    .join-btn {
+      background: #fff; color: var(--red); font-weight: 700; font-size: 12px;
+      padding: 9px 14px; border-radius: var(--radius-sm); border: none;
+      cursor: pointer; flex-shrink: 0; font-family: 'Barlow', sans-serif;
+      transition: opacity .2s;
+    }
+    .join-btn:hover { opacity: .88; }
+
+    /* ── TAB BAR ── */
+    .tab-bar {
+      display: flex; background: var(--white);
+      border-top: 0.5px solid var(--border);
+      padding: 10px 0 8px;
+      position: sticky; bottom: 0; z-index: 40;
+    }
+    .tab {
+      flex: 1; display: flex; flex-direction: column;
+      align-items: center; gap: 3px; cursor: pointer;
+      transition: opacity .2s;
+    }
+    .tab:hover { opacity: .75; }
+    .tab i { font-size: 19px; color: var(--text-sm); }
+    .tab.active i { color: var(--blue); }
+    .tab span { font-size: 9px; color: var(--text-sm); font-weight: 500; }
+    .tab.active span { color: var(--blue); }
+    .tab-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--red); margin-top: 1px; }
+
+    /* ── DESKTOP ASIDE ── */
+    .aside-card {
+      background: var(--white); border-radius: var(--radius);
+      border: 0.5px solid var(--border); padding: 16px;
+    }
+    .aside-title {
+      font-size: 12px; font-weight: 700; color: var(--blue);
+      text-transform: uppercase; letter-spacing: .7px; margin-bottom: 12px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .aside-title i { color: var(--red); }
+    .aside-stat-row { display: flex; justify-content: space-between; align-items: center; padding: 7px 0; border-bottom: 0.5px solid var(--border); }
+    .aside-stat-row:last-child { border-bottom: none; }
+    .aside-stat-label { font-size: 12px; color: var(--text-muted); }
+    .aside-stat-val { font-size: 13px; font-weight: 700; color: var(--blue); }
+    .aside-links { display: flex; flex-direction: column; gap: 8px; }
+    .aside-link {
+      display: flex; align-items: center; gap: 9px;
+      font-size: 12px; font-weight: 500; color: var(--text);
+      padding: 8px 10px; border-radius: 7px;
+      background: var(--bg); cursor: pointer; transition: background .15s;
+    }
+    .aside-link:hover { background: var(--blue-light); color: var(--blue); }
+    .aside-link i { font-size: 15px; color: var(--red); width: 18px; text-align: center; }
+    .aside-cta {
+      background: var(--blue); color: #fff; border: none; width: 100%;
+      padding: 11px; border-radius: 8px; font-size: 13px; font-weight: 700;
+      font-family: 'Barlow', sans-serif; cursor: pointer; margin-top: 4px;
+      transition: background .2s;
+    }
+    .aside-cta:hover { background: var(--blue-dark); }
+    .aside-brand {
+      display: flex; align-items: center; gap: 10px; margin-bottom: 12px;
+      padding-bottom: 12px; border-bottom: 0.5px solid var(--border);
+    }
+    .brand-logo {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 28px; font-weight: 700; color: var(--blue); letter-spacing: -1px;
+    }
+    .brand-horse { font-size: 26px; }
+    .brand-sub { font-size: 10px; color: var(--text-muted); line-height: 1.3; }
+  </style>
+</head>
+<body>
+
+<div class="desktop-wrapper">
+
+  <!-- ── PHONE SHELL ── -->
+  <div>
+    <p class="desktop-label">TVS Mujeres Club — Micrositio</p>
+    <div class="app-shell">
+      <div class="scroll-area">
+
+        <!-- TOP BAR -->
+        <div class="topbar">
+          <div class="topbar-left">
+            <span class="back-btn"><i class="fa-solid fa-chevron-left"></i> App TVS</span>
+            <span class="club-badge">Club Mujeres</span>
+          </div>
+          <div class="topbar-right">
+            <i class="fa-solid fa-search"></i>
+            <i class="fa-solid fa-bell"></i>
+            <i class="fa-solid fa-circle-user"></i>
+          </div>
+        </div>
+
+        <!-- HERO -->
+        <div class="hero">
+          <span class="hero-tag">TVS Owners — Mujeres</span>
+          <h1>Tu comunidad<br>sobre dos ruedas</h1>
+          <p>Todas las motos TVS, todas bienvenidas</p>
+          <div class="hero-actions">
+            <button class="btn-primary">Unirme al club</button>
+            <button class="btn-outline">Explorar</button>
+          </div>
+          <div class="hero-stats">
+            <div class="stat"><div class="stat-n">2.4K</div><div class="stat-l">Miembros</div></div>
+            <div class="stat"><div class="stat-n">18</div><div class="stat-l">Ciudades</div></div>
+            <div class="stat"><div class="stat-n">9</div><div class="stat-l">Modelos</div></div>
+            <div class="stat"><div class="stat-n">34</div><div class="stat-l">Eventos</div></div>
+          </div>
+        </div>
+
+        <!-- CIUDAD -->
+        <div class="section">
+          <div class="section-header">
+            <span class="section-title"><i class="fa-solid fa-location-dot"></i>Por ciudad</span>
+            <span class="see-all">Ver todas</span>
+          </div>
+          <div class="filter-row">
+            <button class="pill active">Todas</button>
+            <button class="pill">Bogotá</button>
+            <button class="pill">Medellín</button>
+            <button class="pill">Cali</button>
+            <button class="pill">Barranquilla</button>
+            <button class="pill">Bucaramanga</button>
+          </div>
+          <div class="city-grid">
+            <div class="city-card"><i class="fa-solid fa-building"></i><div class="cn">Bogotá</div><div class="cc">840 motas</div></div>
+            <div class="city-card"><i class="fa-solid fa-mountain"></i><div class="cn">Medellín</div><div class="cc">512 motas</div></div>
+            <div class="city-card"><i class="fa-solid fa-sun"></i><div class="cn">Cali</div><div class="cc">310 motas</div></div>
+            <div class="city-card"><i class="fa-solid fa-water"></i><div class="cn">Barranquilla</div><div class="cc">228 motas</div></div>
+            <div class="city-card"><i class="fa-solid fa-tree"></i><div class="cn">Bucaramanga</div><div class="cc">187 motas</div></div>
+            <div class="city-card"><i class="fa-solid fa-plus"></i><div class="cn">+13 más</div><div class="cc">ver todas</div></div>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- MODELOS -->
+        <div class="section">
+          <div class="section-header">
+            <span class="section-title"><i class="fa-solid fa-motorcycle"></i>Estilo de moto</span>
+            <span class="see-all">Ver todos</span>
+          </div>
+          <div class="model-scroll">
+            <div class="model-card">
+              <div class="model-icon"><i class="fa-solid fa-motorcycle"></i></div>
+              <div class="model-name">Apache RTR</div>
+              <div class="model-owners">1.2K dueñas</div>
+              <span class="model-badge">Sport</span>
+            </div>
+            <div class="model-card">
+              <div class="model-icon"><i class="fa-solid fa-motorcycle"></i></div>
+              <div class="model-name">NTORQ 125</div>
+              <div class="model-owners">640 dueñas</div>
+              <span class="model-badge">Scooter</span>
+            </div>
+            <div class="model-card">
+              <div class="model-icon"><i class="fa-solid fa-motorcycle"></i></div>
+              <div class="model-name">Raider 125</div>
+              <div class="model-owners">390 dueñas</div>
+              <span class="model-badge">Naked</span>
+            </div>
+            <div class="model-card">
+              <div class="model-icon"><i class="fa-solid fa-motorcycle"></i></div>
+              <div class="model-name">Star City+</div>
+              <div class="model-owners">310 dueñas</div>
+              <span class="model-badge">Commuter</span>
+            </div>
+            <div class="model-card">
+              <div class="model-icon"><i class="fa-solid fa-motorcycle"></i></div>
+              <div class="model-name">Jupiter 125</div>
+              <div class="model-owners">280 dueñas</div>
+              <span class="model-badge">Scooter</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- OCUPACIÓN -->
+        <div class="section">
+          <div class="section-header">
+            <span class="section-title"><i class="fa-solid fa-briefcase"></i>Ocupación</span>
+            <span class="see-all">Ver todas</span>
+          </div>
+          <div class="occ-grid">
+            <div class="occ-card"><div class="occ-icon"><i class="fa-solid fa-stethoscope"></i></div><div><div class="occ-label">Salud</div><div class="occ-n">380 miembros</div></div></div>
+            <div class="occ-card"><div class="occ-icon"><i class="fa-solid fa-code"></i></div><div><div class="occ-label">Tecnología</div><div class="occ-n">290 miembros</div></div></div>
+            <div class="occ-card"><div class="occ-icon"><i class="fa-solid fa-graduation-cap"></i></div><div><div class="occ-label">Educación</div><div class="occ-n">265 miembros</div></div></div>
+            <div class="occ-card"><div class="occ-icon"><i class="fa-solid fa-store"></i></div><div><div class="occ-label">Emprendedoras</div><div class="occ-n">410 miembros</div></div></div>
+            <div class="occ-card"><div class="occ-icon"><i class="fa-solid fa-palette"></i></div><div><div class="occ-label">Creativas</div><div class="occ-n">210 miembros</div></div></div>
+            <div class="occ-card"><div class="occ-icon"><i class="fa-solid fa-ellipsis"></i></div><div><div class="occ-label">Otras</div><div class="occ-n">845 miembros</div></div></div>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- MIEMBROS -->
+        <div class="section">
+          <div class="section-header">
+            <span class="section-title"><i class="fa-solid fa-users"></i>Miembros destacadas</span>
+            <span class="see-all">Ver más</span>
+          </div>
+          <div class="profile-scroll">
+            <div class="profile-card"><div class="avatar av1">VR</div><div class="p-name">Valentina R.</div><div class="p-occ">Médica</div><div class="p-model">Apache 200</div></div>
+            <div class="profile-card"><div class="avatar av2">SG</div><div class="p-name">Sara G.</div><div class="p-occ">Diseñadora</div><div class="p-model">NTORQ 125</div></div>
+            <div class="profile-card"><div class="avatar av3">MP</div><div class="p-name">Manuela P.</div><div class="p-occ">Docente</div><div class="p-model">Raider 125</div></div>
+            <div class="profile-card"><div class="avatar av4">LC</div><div class="p-name">Laura C.</div><div class="p-occ">Emprendedora</div><div class="p-model">Star City+</div></div>
+            <div class="profile-card"><div class="avatar av1">AN</div><div class="p-name">Alejandra N.</div><div class="p-occ">Ingeniera</div><div class="p-model">Apache 160</div></div>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- EVENTOS -->
+        <div class="section">
+          <div class="section-header">
+            <span class="section-title"><i class="fa-solid fa-calendar-days"></i>Próximos eventos</span>
+            <span class="see-all">Ver agenda</span>
+          </div>
+          <div class="event-list">
+            <div class="event-card">
+              <div class="event-date"><div class="ev-day">14</div><div class="ev-mon">Jun</div></div>
+              <div class="ev-info">
+                <div class="ev-name">Rodada nocturna Bogotá</div>
+                <div class="ev-loc"><i class="fa-solid fa-location-dot"></i> Parque Simón Bolívar</div>
+              </div>
+              <span class="ev-tag">Rodada</span>
+            </div>
+            <div class="event-card">
+              <div class="event-date"><div class="ev-day">21</div><div class="ev-mon">Jun</div></div>
+              <div class="ev-info">
+                <div class="ev-name">Taller de mantenimiento básico</div>
+                <div class="ev-loc"><i class="fa-solid fa-location-dot"></i> Concesionario TVS Norte</div>
+              </div>
+              <span class="ev-tag">Taller</span>
+            </div>
+            <div class="event-card">
+              <div class="event-date"><div class="ev-day">05</div><div class="ev-mon">Jul</div></div>
+              <div class="ev-info">
+                <div class="ev-name">Encuentro nacional — Medellín</div>
+                <div class="ev-loc"><i class="fa-solid fa-location-dot"></i> Plaza Mayor, Medellín</div>
+              </div>
+              <span class="ev-tag">Nacional</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- JOIN BANNER -->
+        <div class="join-banner">
+          <div>
+            <h3>¿Tienes una TVS?</h3>
+            <p>Únete gratis y conecta<br>con tu comunidad</p>
+          </div>
+          <button class="join-btn">Registrarme</button>
+        </div>
+
+        <!-- TAB BAR -->
+        <div class="tab-bar">
+          <div class="tab active">
+            <i class="fa-solid fa-house"></i>
+            <span>Inicio</span>
+            <div class="tab-dot"></div>
+          </div>
+          <div class="tab"><i class="fa-solid fa-map"></i><span>Explorar</span></div>
+          <div class="tab"><i class="fa-solid fa-calendar"></i><span>Eventos</span></div>
+          <div class="tab"><i class="fa-solid fa-users"></i><span>Comunidad</span></div>
+          <div class="tab"><i class="fa-solid fa-user"></i><span>Mi perfil</span></div>
+        </div>
+
+      </div><!-- /scroll-area -->
+    </div><!-- /app-shell -->
+  </div>
+
+  <!-- ── DESKTOP ASIDE ── -->
+  <div class="desktop-aside">
+
+    <div class="aside-card">
+      <div class="aside-brand">
+        <div>
+          <div class="brand-logo">TVS</div>
+        </div>
+        <div class="brand-sub">Club Oficial<br>Mujeres Moteras</div>
+      </div>
+      <div class="aside-title"><i class="fa-solid fa-chart-bar"></i>Comunidad</div>
+      <div class="aside-stat-row"><span class="aside-stat-label">Total miembros</span><span class="aside-stat-val">2,400</span></div>
+      <div class="aside-stat-row"><span class="aside-stat-label">Ciudades activas</span><span class="aside-stat-val">18</span></div>
+      <div class="aside-stat-row"><span class="aside-stat-label">Modelos TVS</span><span class="aside-stat-val">9</span></div>
+      <div class="aside-stat-row"><span class="aside-stat-label">Eventos este mes</span><span class="aside-stat-val">6</span></div>
+    </div>
+
+    <div class="aside-card">
+      <div class="aside-title"><i class="fa-solid fa-link"></i>Accesos rápidos</div>
+      <div class="aside-links">
+        <div class="aside-link"><i class="fa-solid fa-map-location-dot"></i>Grupos por ciudad</div>
+        <div class="aside-link"><i class="fa-solid fa-motorcycle"></i>Mi modelo TVS</div>
+        <div class="aside-link"><i class="fa-solid fa-calendar-check"></i>Mis eventos</div>
+        <div class="aside-link"><i class="fa-solid fa-id-badge"></i>Mi perfil de club</div>
+        <div class="aside-link"><i class="fa-solid fa-headset"></i>Soporte TVS</div>
+      </div>
+    </div>
+
+    <div class="aside-card">
+      <div class="aside-title"><i class="fa-solid fa-star"></i>Próximo evento</div>
+      <div style="background:var(--bg);border-radius:8px;padding:12px;margin-bottom:10px;">
+        <div style="font-size:10px;color:var(--red);font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin-bottom:4px;">14 Jun • Rodada</div>
+        <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px;">Rodada nocturna Bogotá</div>
+        <div style="font-size:11px;color:var(--text-muted);display:flex;align-items:center;gap:5px;"><i class="fa-solid fa-location-dot" style="font-size:10px;color:var(--red)"></i>Parque Simón Bolívar</div>
+      </div>
+      <button class="aside-cta">Unirme al club</button>
+    </div>
+
+  </div><!-- /aside -->
+
+</div><!-- /desktop-wrapper -->
+
+<script>
+  document.querySelectorAll('.pill').forEach(btn => {
+    btn.addEventListener('click', () => {
+      btn.closest('.filter-row').querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>
